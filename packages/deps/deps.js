@@ -30,7 +30,8 @@
         // We may be inside a flush already, in which case this
         // is unnecessary but harmless.
         if (!pending_invalidate.length)
-          setTimeout(Meteor.flush, 0);
+          // We don't depend on Meteor.setTimeout, but use it if it exists.
+          (Meteor.setTimeout || setTimeout)(Meteor.flush, 0);
         pending_invalidate.push(this);
       }
     },
